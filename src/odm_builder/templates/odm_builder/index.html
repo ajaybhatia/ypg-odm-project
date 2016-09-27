@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block container %}
+	<div class="container odm">
+  		<div class="row">
+  			<div class="col-md-8 col-md-offset-2">
+  				{% crispy form %}
+  			</div>
+  		</div>
+	</div>
+{% endblock %}

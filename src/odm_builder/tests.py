@@ -1,3 +1,5 @@
 from django.test import TestCase
+from .forms import ODMForm
 
-# Create your tests here.
+def index(request):
+	return render(request, 'index.html')
