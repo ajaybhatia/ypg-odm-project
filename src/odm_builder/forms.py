@@ -13,6 +13,15 @@ class ODMForm(forms.Form):
 	)
 
 	ODM_CHOICES = (
+		('Tinno', 'Tinno'),
+		('Huaqin', 'Huaqin'),
+		('IMG', 'IMG'),
+		('Ragentek', 'Ragentek'),
+		('Wingtech', 'Wingtech'),
+		('Coolpad', 'Coolpad'),
+		('Amer', 'Amer'),
+		('Sprocomm', 'Sprocomm'),
+		('Topwisez', 'Topwisez'),
 	)
 
 	ANDROID_VERSION_CHOICES = (
@@ -29,9 +38,13 @@ class ODMForm(forms.Form):
 
 	# Drop-downs
 	soc_vendor = forms.ChoiceField(choices=VENDOR_SOC_CHOICES, initial='MediaTek')
-	odm = forms.CharField(required=False)
+	odm = forms.ChoiceField(choices=ODM_CHOICES, initial='Tinno')
 	android_version = forms.ChoiceField(choices=ANDROID_VERSION_CHOICES, initial='L-5.1.1')
 	build_type = forms.ChoiceField(choices=BUILD_TYPE_CHOICES, initial='OTA')
+
+	# Uploads
+	target_file = forms.FileField()
+	buildprop_file = forms.FileField()
 
 	def __init__(self, *args, **kwargs):
 		super(ODMForm, self).__init__(*args, **kwargs)
