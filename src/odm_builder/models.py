@@ -7,9 +7,6 @@ class Build(models.Model):
 		('Spreadtrum', 'Spreadtrum'),
 	)
 
-	ODM_CHOICES = (
-	)
-
 	ANDROID_VERSION_CHOICES = (
 		('L-5.1.1', 'L-5.1.1'),
 		('M-6.0', 'M-6.0'),

@@ -6,11 +6,24 @@ from django.conf import settings
 
 
 class BaseProfile(models.Model):
+    ODM_CHOICES = (
+        ('Tinno', 'Tinno'),
+        ('Huaqin', 'Huaqin'),
+        ('IMG', 'IMG'),
+        ('Ragentek', 'Ragentek'),
+        ('Wingtech', 'Wingtech'),
+        ('Coolpad', 'Coolpad'),
+        ('Amer', 'Amer'),
+        ('Sprocomm', 'Sprocomm'),
+        ('Topwisez', 'Topwisez'),
+    )
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 primary_key=True)
     slug = models.UUIDField(default=uuid.uuid4, blank=True, editable=False)
     # Add more user profile fields here. Make sure they are nullable
     # or with default values
+    odm = models.CharField(max_length=100, choices=ODM_CHOICES, default='Tinno')
     picture = models.ImageField('Profile picture',
                                 upload_to='profile_pics/%Y-%m-%d/',
                                 null=True,

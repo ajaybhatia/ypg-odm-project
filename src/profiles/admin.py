@@ -14,7 +14,7 @@ class UserProfileInline(admin.StackedInline):
 
 class NewUserAdmin(NamedUserAdmin):
     inlines = [UserProfileInline]
-    list_display = ('is_active', 'email', 'name', 'permalink',
+    list_display = ('is_active', 'email', 'name', 'odm', 'permalink',
                     'is_superuser', 'is_staff',)
 
     # 'View on site' didn't work since the original User model needs to
@@ -26,6 +26,9 @@ class NewUserAdmin(NamedUserAdmin):
         # Unicode hex b6 is the Pilcrow sign
         return '<a href="{}">{}</a>'.format(url, '\xb6')
     permalink.allow_tags = True
+
+    def odm(self, obj):
+        return obj.profile.odm
 
 admin.site.unregister(User)
 admin.site.register(User, NewUserAdmin)
