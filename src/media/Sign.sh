@@ -23,8 +23,7 @@ echo $mmx_build_version
 echo $target_product
 
 #./build/tools/releasetools/sign_target_files_apks.py -o -d  /home/gursimran/YUClosed/vendor/yuos/security/yuos_keys/ /home/gursimran/ODM/tinno/dist/*-target_files-*.zip signed-target_files_tinno.zip
-#./build/tools/releasetools/sign_target_files_apks.py -o -d $mmx_key_path/  $path_of_target_file/$target_file_name $new_path_of_signed_target_files/Signed-MMX-30092016-$OS_Android_version-$Build_ID-$mmx_build_version_$target_product.zip
-./sign_target_files_apks.py -o -d $mmx_key_path/  $path_of_target_file/$target_file_name $new_path_of_signed_target_files/Signed-MMX-30092016-$OS_Android_version-$Build_ID-$mmx_build_version_$target_product.zip
+./build/tools/releasetools/sign_target_files_apks.py -o -d $mmx_key_path/  $path_of_target_file/$target_file_name $new_path_of_signed_target_files/Signed-MMX-30092016-$OS_Android_version-$Build_ID-$mmx_build_version_$target_product.zip
 
 #Fastboot Images
 if [ "$1" == "FACTORY" ] 
