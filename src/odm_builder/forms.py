@@ -4,8 +4,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import FormActions
 
+from .models import Build
 
-class ODMForm(forms.Form):
+class ODMForm(forms.ModelForm):
 	VENDOR_SOC_CHOICES = (
 		('MediaTek', 'MTK'),
 		('QualComm', 'QCOM'),
@@ -51,3 +52,7 @@ class ODMForm(forms.Form):
 
 		self.helper = FormHelper(self)
 		self.helper.layout.append(Div(Submit('save', 'save', css_class="btn-lg btn-primary"), css_class="pull-right"))
+
+	class Meta:
+		model = Build
+		exclude = ['user']
