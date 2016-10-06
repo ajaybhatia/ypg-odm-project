@@ -8,13 +8,13 @@ def index(request):
 	if request.method == 'POST':
 		form = ODMForm(request.POST, request.FILES)
 		if form.is_valid():
-			print(form)
-			build_file_name = request.FILES['buildprop_file']
-			target_file_name = request.FILES['target_file']
 			build = form.save(commit=False)
 			build.user = request.user
-			build.save() 
-			return redirect('/')
+			build.save()
+			
+			# Main Logic goes here
+
+			return redirect('/builder/home/')
 	else:
 		form = ODMForm()
 
