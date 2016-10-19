@@ -51,7 +51,7 @@ class ODMForm(forms.ModelForm):
 		super(ODMForm, self).__init__(*args, **kwargs)
 
 		self.helper = FormHelper(self)
-		self.helper.layout.append(Div(Submit('save', 'save', css_class="btn-lg btn-primary"), css_class="pull-right"))
+		self.helper.layout.append(Div(Submit('begin_sign', 'Begin Sign', css_class="btn-lg btn-primary"), css_class="pull-right"))
 
 	class Meta:
 		model = Build
