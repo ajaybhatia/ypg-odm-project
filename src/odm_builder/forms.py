@@ -44,7 +44,7 @@ class ODMForm(forms.ModelForm):
 	build_type = forms.ChoiceField(choices=BUILD_TYPE_CHOICES, initial='OTA')
 
 	# Uploads
-	target_file = forms.FileField()
+	source_file = forms.FileField()
 	buildprop_file = forms.FileField()
 
 	def __init__(self, *args, **kwargs):
