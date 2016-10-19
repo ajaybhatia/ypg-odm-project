@@ -52,6 +52,9 @@ def index(request):
 			if not os.path.exists(NEW_PATH_OF_SIGNED_TARGET_FILES):
 				os.makedirs(NEW_PATH_OF_SIGNED_TARGET_FILES)
 
+			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
+			# Todo 	
+
 			call('export target_file_name="' + build_file_name + '"', shell=True)
 			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
 			call('export path_of_target_file="' + PATH_OF_SOURCE_FILE + '"', shell=True)
