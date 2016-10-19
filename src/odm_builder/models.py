@@ -39,7 +39,7 @@ class Build(models.Model):
 	build_type = models.CharField(max_length=10, choices=BUILD_TYPE_CHOICES, default='OTA')
 
 	# Uploads
-	target_file = models.FileField()
+	source_file = models.FileField()
 	buildprop_file = models.FileField()
 
 	# Timestamp

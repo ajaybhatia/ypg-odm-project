@@ -20,7 +20,7 @@ def index(request):
 			build.user = request.user
 			
 			# Main Logic goes here
-			build_file_name = build.target_file.name
+			build_file_name = build.source_file.name
 			target_file_name = build.buildprop_file.name
 			
 			env = environ.Env()
@@ -29,9 +29,10 @@ def index(request):
 			    environ.Env.read_env(str(env_file))
 
 			MMX_KEY_PATH = env('MMX_KEY_PATH')
-			PATH_OF_TARGET_FILE = env('PATH_OF_TARGET_FILE')
-			NEW_PATH_OF_SIGNED_TARGET_FILES = env('NEW_PATH_OF_SIGNED_TARGET_FILES')
-			
+			PATH_OF_SOURCE_FILE = env('PATH_OF_SOURCE_FILE')
+			#NEW_PATH_OF_SIGNED_TARGET_FILES = env('NEW_PATH_OF_SIGNED_TARGET_FILES')
+			NEW_PATH_OF_SIGNED_TARGET_FILES = '/mnt/ODM/' + build.odm.lower()
+
 			MEDIA_PATH = settings.MEDIA_ROOT
 			build_file = join(MEDIA_PATH, build_file_name)
 			sign_file = join(MEDIA_PATH, 'Sign.sh')
@@ -45,10 +46,15 @@ def index(request):
 					build_version = line.split('=')[1].split('/')[4].split(':')[0]
 				if re.match("ro.yu.device", line):
 					target_product = line.split('=')[1]
+					NEW_PATH_OF_SIGNED_TARGET_FILES += target_product + '/'
+
+			# If target directory does't exists then create one
+			if not os.path.exists(NEW_PATH_OF_SIGNED_TARGET_FILES):
+				os.makedirs(NEW_PATH_OF_SIGNED_TARGET_FILES)
 
 			call('export target_file_name="' + build_file_name + '"', shell=True)
 			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
-			call('export path_of_target_file="' + PATH_OF_TARGET_FILE + '"', shell=True)
+			call('export path_of_target_file="' + PATH_OF_SOURCE_FILE + '"', shell=True)
 			call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
 			call('export OS_Android_version="' + build.android_version + '"', shell=True)
 			call('export Build_ID="' + build_id + '"', shell=True)
