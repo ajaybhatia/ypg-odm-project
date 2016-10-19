@@ -53,7 +53,8 @@ def index(request):
 				os.makedirs(NEW_PATH_OF_SIGNED_TARGET_FILES)
 
 			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
-			# Todo 	
+			import shutil
+			shutil.move(os.getcwd() + '/' + build_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
 
 			call('export target_file_name="' + build_file_name + '"', shell=True)
 			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
