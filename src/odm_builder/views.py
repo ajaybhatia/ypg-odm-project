@@ -33,7 +33,7 @@ def index(request):
 			#NEW_PATH_OF_SIGNED_TARGET_FILES = env('NEW_PATH_OF_SIGNED_TARGET_FILES')
 			NEW_PATH_OF_SIGNED_TARGET_FILES = '/mnt/ODM/' + build.odm.lower()
 
-			#MEDIA_PATH = settings.MEDIA_ROOT
+			MEDIA_PATH = settings.MEDIA_ROOT
 			build_file = join(MEDIA_PATH, build_file_name)
 			#sign_file = join(MEDIA_PATH, 'Sign.sh')
 
