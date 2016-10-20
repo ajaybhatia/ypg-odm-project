@@ -19,54 +19,54 @@ def index(request):
 			build = form.save(commit=False)
 			build.user = request.user
 			
-			# Main Logic goes here
-			build_file_name = build.source_file.name
-			target_file_name = build.buildprop_file.name
+			# # Main Logic goes here
+			# build_file_name = build.source_file.name
+			# target_file_name = build.buildprop_file.name
 			
-			env = environ.Env()
-			env_file = join(dirname(__file__), 'config.env')
-			if exists(env_file):
-			    environ.Env.read_env(str(env_file))
+			# env = environ.Env()
+			# env_file = join(dirname(__file__), 'config.env')
+			# if exists(env_file):
+			#     environ.Env.read_env(str(env_file))
 
-			MMX_KEY_PATH = env('MMX_KEY_PATH')
-			PATH_OF_SOURCE_FILE = env('PATH_OF_SOURCE_FILE')
-			#NEW_PATH_OF_SIGNED_TARGET_FILES = env('NEW_PATH_OF_SIGNED_TARGET_FILES')
-			NEW_PATH_OF_SIGNED_TARGET_FILES = '/mnt/ODM/' + build.odm.lower()
+			# MMX_KEY_PATH = env('MMX_KEY_PATH')
+			# PATH_OF_SOURCE_FILE = env('PATH_OF_SOURCE_FILE')
+			# #NEW_PATH_OF_SIGNED_TARGET_FILES = env('NEW_PATH_OF_SIGNED_TARGET_FILES')
+			# NEW_PATH_OF_SIGNED_TARGET_FILES = '/mnt/ODM/' + build.odm.lower()
 
-			MEDIA_PATH = settings.MEDIA_ROOT
-			build_file = join(MEDIA_PATH, build_file_name)
-			#sign_file = join(MEDIA_PATH, 'Sign.sh')
+			# MEDIA_PATH = settings.MEDIA_ROOT
+			# build_file = join(MEDIA_PATH, build_file_name)
+			# #sign_file = join(MEDIA_PATH, 'Sign.sh')
 
-			sign_file = '/mnt/yuos/Sign.sh'
+			# sign_file = '/mnt/yuos/Sign.sh'
 
-			import re
-			build_str = open(build_file, "r")
-			for line in build_str:
-				if re.match("ro.build.id", line):
-					build_id = line.split('=')[1]
-				if re.match("ro.build.fingerprint", line):
-					build_version = line.split('=')[1].split('/')[4].split(':')[0]
-				if re.match("ro.yu.device", line):
-					target_product = line.split('=')[1]
-					NEW_PATH_OF_SIGNED_TARGET_FILES += target_product + '/'
+			# import re
+			# build_str = open(build_file, "r")
+			# for line in build_str:
+			# 	if re.match("ro.build.id", line):
+			# 		build_id = line.split('=')[1]
+			# 	if re.match("ro.build.fingerprint", line):
+			# 		build_version = line.split('=')[1].split('/')[4].split(':')[0]
+			# 	if re.match("ro.yu.device", line):
+			# 		target_product = line.split('=')[1]
+			# 		NEW_PATH_OF_SIGNED_TARGET_FILES += target_product + '/'
 
-			# If target directory does't exists then create one
-			if not os.path.exists(NEW_PATH_OF_SIGNED_TARGET_FILES):
-				os.makedirs(NEW_PATH_OF_SIGNED_TARGET_FILES)
+			# # If target directory does't exists then create one
+			# if not os.path.exists(NEW_PATH_OF_SIGNED_TARGET_FILES):
+			# 	os.makedirs(NEW_PATH_OF_SIGNED_TARGET_FILES)
 
-			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
-			import shutil
-			shutil.move(os.getcwd() + '/' + build_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
+			# # Move uploaded source file to /mnt/ODM/(odm name)/(device name)
+			# import shutil
+			# shutil.move(os.getcwd() + '/' + build_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
 
-			call('export target_file_name="' + build_file_name + '"', shell=True)
-			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
-			call('export path_of_target_file="' + PATH_OF_SOURCE_FILE + '"', shell=True)
-			call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
-			call('export OS_Android_version="' + build.android_version + '"', shell=True)
-			call('export Build_ID="' + build_id + '"', shell=True)
-			call('export mmx_build_version="' + build_version + '"', shell=True)
-			call('export target_product="' + target_product + '"', shell=True)
-			call('./' + sign_file + ' ' + build.build_type, shell=True)
+			# call('export target_file_name="' + build_file_name + '"', shell=True)
+			# call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
+			# call('export path_of_target_file="' + PATH_OF_SOURCE_FILE + '"', shell=True)
+			# call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
+			# call('export OS_Android_version="' + build.android_version + '"', shell=True)
+			# call('export Build_ID="' + build_id + '"', shell=True)
+			# call('export mmx_build_version="' + build_version + '"', shell=True)
+			# call('export target_product="' + target_product + '"', shell=True)
+			# call('./' + sign_file + ' ' + build.build_type, shell=True)
 
 			build.save()
 			return redirect('/builder/home/')
