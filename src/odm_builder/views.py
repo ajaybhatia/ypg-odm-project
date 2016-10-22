@@ -41,7 +41,7 @@ def index(request):
 			sign_file = '/mnt/yuos/Sign.sh'
 
 			print(build_file)
-
+			
 			import re
 			build_str = open(build_file, "r")
 			for line in build_str:
@@ -50,7 +50,7 @@ def index(request):
 				if re.match("ro.build.fingerprint", line):
 					build_version = line.split('=')[1].split('/')[4].split(':')[0]
 				if re.match("ro.yu.device", line):
-					target_product = line.split('=')[1]
+					target_product = line.split('=')[1].strip()
 					NEW_PATH_OF_SIGNED_TARGET_FILES += '/' + target_product + '/'
 
 			# If target directory does't exists then create one
@@ -60,17 +60,18 @@ def index(request):
 
 			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
 			import shutil
-			shutil.move(os.getcwd() + '/' + build_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
+			shutil.move(os.getcwd() + '/media/' + source_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
 
-			call('export target_file_name="' + build_file_name + '"', shell=True)
+			call('export target_file_name="' + source_file_name + '"', shell=True)
 			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
-			call('export path_of_target_file="' + PATH_OF_SOURCE_FILE + '"', shell=True)
+			call('export path_of_target_file="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
 			call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
 			call('export OS_Android_version="' + build.android_version + '"', shell=True)
 			call('export Build_ID="' + build_id + '"', shell=True)
 			call('export mmx_build_version="' + build_version + '"', shell=True)
 			call('export target_product="' + target_product + '"', shell=True)
-			call('./' + sign_file + ' ' + build.build_type, shell=True)
+			os.chdir("/mnt/yuos")
+			call('. ' + sign_file + ' ' + build.build_type, shell=True)
 
 			return redirect('/builder/home/')
 	else:
