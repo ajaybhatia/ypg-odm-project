@@ -38,7 +38,7 @@ def index(request):
 			build_file = join(MEDIA_PATH, build_file_name)
 			#sign_file = join(MEDIA_PATH, 'Sign.sh')
 
-			sign_file = '/mnt/yuos/Sign.sh'
+			sign_file = 'Sign.sh'
 			
 			import re
 			build_str = open(build_file, "r")
@@ -71,7 +71,7 @@ def index(request):
 			call('export mmx_build_version="' + build_version + '"', shell=True)
 			call('export target_product="' + target_product + '"', shell=True)
 			os.chdir("/mnt/yuos")
-			call('. ' + sign_file + ' ' + build.build_type, shell=True)
+			call('./' + sign_file + ' ' + build.build_type, shell=True)
 
 			return redirect('/builder/home/')
 	else:
