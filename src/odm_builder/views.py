@@ -39,18 +39,18 @@ def index(request):
 			#sign_file = join(MEDIA_PATH, 'Sign.sh')
 
 			sign_file = '/mnt/yuos/Sign.sh'
-
-			print(build_file)
 			
 			import re
 			build_str = open(build_file, "r")
+			target_product_found = False
 			for line in build_str:
 				if re.match("ro.build.id", line):
 					build_id = line.split('=')[1]
 				if re.match("ro.build.fingerprint", line):
 					build_version = line.split('=')[1].split('/')[4].split(':')[0]
-				if re.match("ro.yu.device", line):
+				if re.match("ro.yu.device", line) and not target_product_found:
 					target_product = line.split('=')[1].strip()
+					target_product_found = True
 					NEW_PATH_OF_SIGNED_TARGET_FILES += '/' + target_product + '/'
 
 			# If target directory does't exists then create one
