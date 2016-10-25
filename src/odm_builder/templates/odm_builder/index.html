@@ -4,8 +4,13 @@
 {% block container %}
 	<div class="container odm">
   		<div class="row">
-  			<div class="col-md-8 col-md-offset-2">
-  				{% crispy form %}
+  			<div class="col-md-8 col-md-offset-7">
+  				{# {% crispy form %} #}
+  				<form method="POST" role="form">
+  					{% csrf_token %}
+  				
+  					<button type="submit" class="btn btn-primary">Start Sign</button>
+  				</form>
   			</div>
   		</div>
 	</div>
