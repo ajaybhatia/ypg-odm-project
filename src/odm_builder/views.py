@@ -23,7 +23,9 @@ def index(request):
 			# Main Logic goes here
 			source_file_name = build.source_file.name
 			build_file_name = build.buildprop_file.name
-			
+			datetimestamp = build.uploaded_at
+			soc_vendor = build.soc_vendor
+
 			env = environ.Env()
 			env_file = join(dirname(__file__), 'config.env')
 			if exists(env_file):
@@ -71,7 +73,20 @@ def index(request):
 			# call('export mmx_build_version="' + build_version + '"', shell=True)
 			# call('export target_product="' + target_product + '"', shell=True)
 			os.chdir("/mnt/yuos")
-			call('./' + sign_file + ' ' + build.build_type + ' ' + source_file_name + ' ' + MMX_KEY_PATH + ' ' + NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + build.android_version + ' ' + build_id + ' ' + build_version + ' ' + target_product, shell=True)
+			call(
+				'./' + sign_file + ' ' + 
+				build.build_type + ' ' + 
+				source_file_name + ' ' + 
+				MMX_KEY_PATH + ' ' + 
+				NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + 
+				NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + 
+				build.android_version + ' ' + 
+				build_id + ' ' + 
+				build_version + ' ' + 
+				target_product, 
+				soc_vendor,
+				shell=True
+			)
 
 			return redirect('/builder/home/')
 	else:
