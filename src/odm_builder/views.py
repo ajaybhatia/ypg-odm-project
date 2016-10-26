@@ -61,20 +61,45 @@ def index(request):
 			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
 			import shutil
 			shutil.move(os.getcwd() + '/media/' + source_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
-
-			call('export target_file_name="' + source_file_name + '"', shell=True)
-			call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
-			call('export path_of_target_file="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
-			call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
-			call('export OS_Android_version="' + build.android_version + '"', shell=True)
-			call('export Build_ID="' + build_id + '"', shell=True)
-			call('export mmx_build_version="' + build_version + '"', shell=True)
-			call('export target_product="' + target_product + '"', shell=True)
+			# Not required anymore
+			# call('export target_file_name="' + source_file_name + '"', shell=True)
+			# call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
+			# call('export path_of_target_file="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
+			# call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
+			# call('export OS_Android_version="' + build.android_version + '"', shell=True)
+			# call('export Build_ID="' + build_id + '"', shell=True)
+			# call('export mmx_build_version="' + build_version + '"', shell=True)
+			# call('export target_product="' + target_product + '"', shell=True)
 			os.chdir("/mnt/yuos")
-			call('./' + sign_file + ' ' + build.build_type, shell=True)
+			call('./' + sign_file + ' ' + build.build_type + ' ' + source_file_name + ' ' + MMX_KEY_PATH + ' ' + NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + NEW_PATH_OF_SIGNED_TARGET_FILES + ' ' + build.android_version + ' ' + build_id + ' ' + build_version + ' ' + target_product, shell=True)
 
 			return redirect('/builder/home/')
 	else:
 		form = ODMForm()
 
 	return render(request, 'odm_builder/index.html', {'form': form})
+	
+	# # For temp button
+	# if request.method == 'POST':
+	# 		# Main Logic goes here
+
+	# 		SOURCE_FILE = 'p7201-target_files-1474857792.zip'
+	# 		MMX_KEY_PATH = '/mnt/yuos/build/target/product/security'
+	# 		PATH_OF_SOURCE_FILE = '/mnt/ODM/tinno/p7201'
+	# 		NEW_PATH_OF_SIGNED_TARGET_FILES = '/mnt/ODM/tinno/p7201'
+
+	# 		import os
+	# 		call('export target_file_name="' + SOURCE_FILE + '"', shell=True)
+	# 		call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
+	# 		call('export path_of_target_file="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
+	# 		call('export new_path_of_signed_target_files="' + NEW_PATH_OF_SIGNED_TARGET_FILES + '"', shell=True)
+	# 		call('export OS_Android_version="MM-6.0.1"', shell=True)
+	# 		call('export Build_ID="MMB30K"', shell=True)
+	# 		call('export mmx_build_version="MMXMR1.0"', shell=True)
+	# 		call('export target_product="p7201"', shell=True)
+	# 		os.chdir("/mnt/yuos")
+	# 		call('./Sign.sh Factory', shell=True)
+
+	# 		return redirect('/builder/home/')
+
+	# return render(request, 'odm_builder/index.html')
