@@ -73,7 +73,7 @@ def index(request):
 			# call('export mmx_build_version="' + build_version + '"', shell=True)
 			# call('export target_product="' + target_product + '"', shell=True)
 			os.chdir("/mnt/yuos")
-			call(
+			os.system(
 				'./' + sign_file + ' ' + 
 				build.build_type + ' ' + 
 				source_file_name + ' ' + 
@@ -85,7 +85,7 @@ def index(request):
 				build_version + ' ' + 
 				target_product, 
 				soc_vendor,
-				shell=True
+				datetimestamp
 			)
 
 			return redirect('/builder/home/')
