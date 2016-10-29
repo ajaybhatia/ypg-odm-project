@@ -62,7 +62,7 @@ def index(request):
 
 			# Move uploaded source file to /mnt/ODM/(odm name)/(device name)
 			import shutil
-			shutil.move(os.getcwd() + '/media/' + source_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)	
+			shutil.move(os.getcwd() + '/media/' + source_file_name, NEW_PATH_OF_SIGNED_TARGET_FILES)
 			# Not required anymore
 			# call('export target_file_name="' + source_file_name + '"', shell=True)
 			# call('export mmx_key_path="' + MMX_KEY_PATH + '"', shell=True)
@@ -88,6 +88,11 @@ def index(request):
 				datetimestamp
 			)
 
+			# Remove build.prop after src file getting signed.
+			os.remove(build_file)
+			# Remove src file after signing
+			os.remove(NEW_PATH_OF_SIGNED_TARGET_FILES + '/' + source_file_name)
+			
 			return redirect('/builder/home/')
 	else:
 		form = ODMForm()
