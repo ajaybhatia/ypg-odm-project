@@ -83,8 +83,8 @@ def index(request):
 				build.android_version + ' ' + 
 				build_id + ' ' + 
 				build_version + ' ' + 
-				target_product, 
-				soc_vendor,
+				target_product + ' ' +
+				soc_vendor + ' ' +
 				datetimestamp
 			)
 
