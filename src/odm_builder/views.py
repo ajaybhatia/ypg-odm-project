@@ -85,7 +85,7 @@ def index(request):
 				build_version + ' ' + 
 				target_product + ' ' +
 				soc_vendor + ' ' +
-				datetimestamp
+				str(datetimestamp)
 			)
 
 			# Remove build.prop after src file getting signed.
