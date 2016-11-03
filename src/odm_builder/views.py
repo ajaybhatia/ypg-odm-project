@@ -47,7 +47,7 @@ def index(request):
 			target_product_found = False
 			for line in build_str:
 				if re.match("ro.build.id", line):
-					build_id = line.split('=')[1]
+					build_id = line.split('=')[1].strip()
 				if re.match("ro.build.fingerprint", line):
 					build_version = line.split('=')[1].split('/')[4].split(':')[0]
 				if re.match("ro.yu.device", line) and not target_product_found:
@@ -73,7 +73,7 @@ def index(request):
 			# call('export mmx_build_version="' + build_version + '"', shell=True)
 			# call('export target_product="' + target_product + '"', shell=True)
 			os.chdir("/mnt/yuos")
-			os.system(
+			call('bash ' +
 				'./' + sign_file + ' ' + 
 				build.build_type + ' ' + 
 				source_file_name + ' ' + 
@@ -85,7 +85,7 @@ def index(request):
 				build_version + ' ' + 
 				target_product + ' ' +
 				soc_vendor + ' ' +
-				str(datetimestamp)
+				datetimestamp.strftime('%Y%m%d%H%M%s')
 			)
 
 			# Remove build.prop after src file getting signed.
